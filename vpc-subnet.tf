@@ -10,7 +10,7 @@ resource "aws_vpc" "my_vpc" {
 resource "aws_subnet" "public" {
   vpc_id     = aws_vpc.my_vpc.id
   cidr_block = "10.0.0.0/24"
-  availability_zone = "eu-west-3"
+  availability_zone = "eu-west-3b"
 
   tags = {
     Name = "Public Subnet"
@@ -25,7 +25,7 @@ resource "aws_internet_gateway" "my_vpc_igw" {
   }
 }
 
-resource "aws_route_table" "my_vpc_us_east_1a_public" {
+resource "aws_route_table" "my_vpc_eu_west_3b_public" {
     vpc_id = aws_vpc.my_vpc.id
 
     route {
@@ -38,9 +38,9 @@ resource "aws_route_table" "my_vpc_us_east_1a_public" {
     }
 }
 
-resource "aws_route_table_association" "my_vpc_eu_west_3_public" {
+resource "aws_route_table_association" "my_vpc_eu_west_3b_public" {
     subnet_id = aws_subnet.public.id
-    route_table_id = aws_route_table.my_vpc_eu_est_3_public.id
+    route_table_id = aws_route_table.my_vpc_eu_west_3b_public.id
 }
 
 #---------------security group
@@ -83,5 +83,5 @@ resource "aws_instance" "dido-1" {
 }
 
 output "instance_public_ip" {
-  value = "${aws_instance.my_instance.public_ip}"
+  value = "${aws_instance.dido-1.public_ip}"
 }
